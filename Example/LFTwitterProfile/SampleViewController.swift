@@ -19,8 +19,7 @@ class SampleViewController: TwitterProfileViewController {
   var custom: UIView!
   var label: UILabel!
   
-  
-  override func numberOfSegments() -> Int {
+    override func numberOfSegments() -> Int {
     return 2
   }
   

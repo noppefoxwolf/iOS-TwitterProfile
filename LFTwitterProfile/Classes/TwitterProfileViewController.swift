@@ -12,15 +12,15 @@ import SnapKit
 open class TwitterProfileViewController: UIViewController {
   
   // Global tint
-  open static var globalTint: UIColor = UIColor(red: 42.0/255.0, green: 163.0/255.0, blue: 239.0/255.0, alpha: 1)
+    public static var globalTint: UIColor = UIColor(red: 42.0/255.0, green: 163.0/255.0, blue: 239.0/255.0, alpha: 1)
   
   
   // Constants
-  open let stickyheaderContainerViewHeight: CGFloat = 125
+    public let stickyheaderContainerViewHeight: CGFloat = 125
   
-  open let bouncingThreshold: CGFloat = 100
+    public let bouncingThreshold: CGFloat = 100
   
-  open let scrollToScaleDownProfileIconDistance: CGFloat = 60
+    public let scrollToScaleDownProfileIconDistance: CGFloat = 60
   
   open var profileHeaderViewHeight: CGFloat = 160 {
     didSet {
@@ -29,7 +29,7 @@ open class TwitterProfileViewController: UIViewController {
     }
   }
   
-  open let segmentedControlContainerHeight: CGFloat = 46
+    public let segmentedControlContainerHeight: CGFloat = 46
   
   open var username: String? {
     didSet {
@@ -290,7 +290,7 @@ extension TwitterProfileViewController {
   }
   
   func computeMainScrollViewIndicatorInsets() -> UIEdgeInsets {
-    return UIEdgeInsetsMake(self.computeSegmentedControlContainerFrame().lf_originBottom, 0, 0, 0)
+      return UIEdgeInsets(top: self.computeSegmentedControlContainerFrame().lf_originBottom, left: 0, bottom: 0, right: 0)
   }
   
   func computeNavigationFrame() -> CGRect {
@@ -345,7 +345,7 @@ extension TwitterProfileViewController: UIScrollViewDelegate {
       baseInset.top += abs(contentOffset.y)
       self.mainScrollView.scrollIndicatorInsets = baseInset
       
-      self.mainScrollView.bringSubview(toFront: self.profileHeaderView)
+        self.mainScrollView.bringSubviewToFront(self.profileHeaderView)
     } else {
       
       // anything to be set if contentOffset.y is positive
@@ -365,9 +365,9 @@ extension TwitterProfileViewController: UIScrollViewDelegate {
         self.stickyHeaderContainerView.frame = CGRect(x: 0, y: contentOffset.y - scrollToScaleDownProfileIconDistance, width: mainScrollView.bounds.width, height: stickyheaderContainerViewHeight)
         
         // bring stickyHeader to the front
-        self.mainScrollView.bringSubview(toFront: self.stickyHeaderContainerView)
+          self.mainScrollView.bringSubviewToFront(self.stickyHeaderContainerView)
       } else {
-        self.mainScrollView.bringSubview(toFront: self.profileHeaderView)
+          self.mainScrollView.bringSubviewToFront(self.profileHeaderView)
         self.stickyHeaderContainerView.frame = computeStickyHeaderContainerViewFrame()
       }
       
@@ -397,7 +397,7 @@ extension TwitterProfileViewController: UIScrollViewDelegate {
       }
     }
     // Segmented control is always on top in any situations
-    self.mainScrollView.bringSubview(toFront: segmentedControlContainer)
+      self.mainScrollView.bringSubviewToFront(segmentedControlContainer)
   }
 }
 
@@ -434,13 +434,13 @@ extension TwitterProfileViewController {
     print("currentIndex did changed \(self.currentIndex)")
   }
   
-  internal func segmentedControlValueDidChange(sender: AnyObject?) {
+    @objc internal func segmentedControlValueDidChange(sender: AnyObject?) {
     self.currentIndex = self.segmentedControl.selectedSegmentIndex
     
     let scrollViewToBeShown: UIScrollView! = self.currentScrollView
     
     self.scrollViews.forEach { (scrollView) in
-      scrollView?.isHidden = scrollView != scrollViewToBeShown
+        scrollView.isHidden = scrollView != scrollViewToBeShown
     }
     
     scrollViewToBeShown.frame = self.computeTableViewFrame(tableView: scrollViewToBeShown)
@@ -491,19 +491,19 @@ extension CGRect {
 
 // MARK: Public interfaces
 extension TwitterProfileViewController {
-  open func numberOfSegments() -> Int {
+    @objc open func numberOfSegments() -> Int {
     return 0
   }
   
-  open func segmentTitle(forSegment index: Int) -> String {
+    @objc open func segmentTitle(forSegment index: Int) -> String {
     return ""
   }
   
-  open func prepareForLayout() {
+    @objc open func prepareForLayout() {
     /* to be override */
   }
   
-  open func scrollView(forSegment index: Int) -> UIScrollView {
+    @objc open func scrollView(forSegment index: Int) -> UIScrollView {
     return UITableView.init(frame: CGRect.zero, style: .grouped)
   }
 }

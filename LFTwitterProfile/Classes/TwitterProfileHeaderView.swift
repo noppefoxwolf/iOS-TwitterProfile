@@ -42,7 +42,7 @@ class TwitterProfileHeaderView: UIView {
   override func sizeThatFits(_ size: CGSize) -> CGSize {
     descriptionLabel.sizeToFit()
     let bottomFrame = descriptionLabel.frame
-    let iSize = descriptionLabel.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+      let iSize = descriptionLabel.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     let resultSize = CGSize.init(width: size.width, height: bottomFrame.origin.y + iSize.height)
     return resultSize
   }
